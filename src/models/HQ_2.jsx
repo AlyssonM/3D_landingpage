@@ -12,7 +12,7 @@ export function HQ_2(props) {
 
   useEffect(() => {
     actions["Icosphere rot"].play();
-  }, []);
+  }, [actions]);
 
   useFrame(({ clock, camera }) => {
     // HQ_2Ref.current.position.y = -100;

@@ -9,15 +9,15 @@ const App = () => {
       <Router>
         <Navbar />
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/3D_landingpage' element={<Home />} />
           <Route
             path='/*'
             element={
               <>
                 <Routes>
-                  <Route path='/about' element={<About />} />
-                  <Route path='/projects' element={<Projects />} />
-                  <Route path='/contact' element={<Contact />} />
+                  <Route path='/3D_landingpage/about' element={<About />} />
+                  <Route path='/3D_landingpage/projects' element={<Projects />} />
+                  <Route path='/3D_landingpage/contact' element={<Contact />} />
                 </Routes>
                 <Footer />
               </>

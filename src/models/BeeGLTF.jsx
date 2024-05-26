@@ -60,7 +60,7 @@ const handleWheel = (event) =>{
         curveObject2.geometry.dispose();
         curveObject2.material.dispose();
       };
-  }, [scene, actions,gl, handleWheel]);
+  }, [scene, actions, gl, handleWheel, curveObject1, curveObject2 ]);
 
   useFrame(({ clock, camera }) => {
         const delta = (1/100) * direction.current;
