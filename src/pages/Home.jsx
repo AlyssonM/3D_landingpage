@@ -5,12 +5,16 @@ import sakura from "../assets/sakura.mp3";
 import { HomeInfo, Loader } from "../components";
 import { soundoff, soundon } from "../assets/icons";
 import {BeeGLTF, HQ_2} from "../models";
+import { metodology } from "../constants";
+import { projects } from "../constants";
+import { Link } from "react-router-dom";
+import { arrow } from "../assets/icons";
 
 const Home = () => {
   const audioRef = useRef(new Audio(sakura));
   audioRef.current.volume = 0.4;
   audioRef.current.loop = true;
-
+  const [info, setInfo] = useState({ show: false, index: 0, content: null });
   const [isPlayingMusic, setIsPlayingMusic] = useState(false);
 
   useEffect(() => {
@@ -25,13 +29,13 @@ const Home = () => {
 
   
   return (
-    <section className='w-full h-screen relative'>
+    <section className='w-full h-screen fixed overflow-hidden touch-none'>
       {/* <div className='absolute top-28 left-0 right-0 z-10 flex items-center justify-center'>
         {currentStage && <HomeInfo currentStage={currentStage} />}
       </div> */}
     
       <Canvas
-        className={'w-full h-screen bg-transparent'}
+        className={'fixed w-full h-full bg-blue-200'}
         camera={{ near: 0.1, far: 1000 }}
       >
         
@@ -54,15 +58,39 @@ const Home = () => {
           <BeeGLTF 
             scale={[0.09,0.09,0.09]}
             position={[0, 0, 4.5]}
+            setInfo={setInfo}
             />
           <HQ_2 
-            sizescale={[100,100,100]}
             sizescale={1}
             position={[-0.6, -0.95, 5.45]}
           />
         
         </Suspense>
       </Canvas>
+      
+      {
+        
+        info.show && (
+        //<div className='mt-5 flex flex-col'> 
+        <div className='info-box' style={{ position: 'absolute', top: '15%', left: '60%', transform: 'translateX(-5%)'}}> 
+          <div className='block-container w-12 h-12'>
+              <div className={`btn-back rounded-xl ${metodology[Number(info.index)].theme}`} />
+              <div className='btn-front rounded-xl flex justify-center items-center'>
+                <img
+                  src={metodology[Number(info.index)].iconUrl}
+                  alt='threads'
+                  className='w-10 h-10 object-contain'
+                />
+              </div>
+            </div>
+          <p className='text-2xl font-poppins font-semibold text-black text-center'>
+            {metodology[Number(info.index)].name}    
+          </p>
+          <p className='mt-2 text-slate-500'>{metodology[Number(info.index)].description}</p>
+      
+        </div> 
+        //</div>
+      )};
 
       <div className='absolute bottom-2 left-2'>
         <img

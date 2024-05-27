@@ -63,7 +63,7 @@ body:has(.card[data-color="green"]:hover) {
   }
 
   .info-box {
-    @apply mx-5 relative flex text-white flex-col gap-3 max-w-2xl neo-brutalism-blue pt-4 pb-12 px-8;
+    @apply mx-0 absolute sm:min-w-[200px] lg:max-w-[500px] text-white flex-col gap-3 max-w-3xl stage-info-blue backdrop-blur-md pt-4 pb-12 px-8;
   }
 
   .neo-btn {
@@ -123,7 +123,7 @@ body:has(.card[data-color="green"]:hover) {
 }
 
 .block-container .btn-back-yellow {
-  background: linear-gradient(135deg, #f7971e -20%, #ffd200 120%);
+  background: linear-gradient(135deg, #f7951e -20%, #ffd200 120%);
 }
 
 .block-container .btn-back-blue {
@@ -175,9 +175,18 @@ body:has(.card[data-color="green"]:hover) {
     0.65vmin 1vmin #0092db, 1vmin 0.65vmin #0092db;
 }
 
+.stage-info-blue{
+  background: #feffffc4;
+  position: relative;
+  border-radius: 10px;
+  border: #ffffff;
+  box-shadow: 0.6vmin 0.6vmin #05237c5d;
+}
+
 .neo-brutalism-white {
   background: #fff;
   border: #fff;
   box-shadow: 0.6vmin 0.6vmin #fff, 1vmin 1vmin #d2e4ff, 1vmin 1vmin #d2e4ff,
     0.65vmin 1vmin #d2e4ff, 1vmin 0.65vmin #d2e4ff;
 }
+

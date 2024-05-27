@@ -12,23 +12,22 @@ const About = () => {
   return (
     <section className='max-container'>
       <h1 className='head-text'>
-        Hello, I'm{" "}
+        Olá, Somos a {" "}
         <span className='blue-gradient_text font-semibold drop-shadow'>
           {" "}
-          Adrian
+          Hive Hue!
         </span>{" "}
-        👋
+        
       </h1>
 
       <div className='mt-5 flex flex-col gap-3 text-slate-500'>
         <p>
-          Software Engineer based in Croatia, specializing in technical
-          education through hands-on learning and building applications.
+        A Hive Hue é uma startup que conecta o potencial da tecnologia blockchain com a força da gamificação para criar soluções inovadoras. Acreditamos no poder da colaboração e da inteligência coletiva para gerar impacto positivo no mundo. 
         </p>
       </div>
 
       <div className='py-10 flex flex-col'>
-        <h3 className='subhead-text'>My Skills</h3>
+        <h3 className='subhead-text'>Skills</h3>
 
         <div className='mt-16 flex flex-wrap gap-12'>
           {skills.map((skill) => (
@@ -47,13 +46,13 @@ const About = () => {
       </div>
 
       <div className='py-16'>
-        <h3 className='subhead-text'>Work Experience.</h3>
-        <div className='mt-5 flex flex-col gap-3 text-slate-500'>
+        <h3 className='subhead-text'>Roadmap</h3>
+        {/* <div className='mt-5 flex flex-col gap-3 text-slate-500'>
           <p>
             I've worked with all sorts of companies, leveling up my skills and
             teaming up with smart people. Here's the rundown:
           </p>
-        </div>
+        </div> */}
 
         <div className='mt-12 flex'>
           <VerticalTimeline>

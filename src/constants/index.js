@@ -16,6 +16,9 @@ import {
     nextjs,
     nodejs,
     pricewise,
+    university,
+    idea,
+    profits,
     react,
     redux,
     sass,
@@ -184,8 +187,8 @@ export const socialLinks = [
 
 export const projects = [
     {
-        iconUrl: pricewise,
-        theme: 'btn-back-red',
+        iconUrl: university,
+        theme: 'btn-back-blue',
         name: 'Amazon Price Tracker',
         description: 'Developed a web application that tracks and notifies users of price changes for products on Amazon, helping users find the best deals.',
         link: 'https://github.com/adrianhajdin/pricewise',
@@ -199,7 +202,7 @@ export const projects = [
     },
     {
         iconUrl: car,
-        theme: 'btn-back-blue',
+        theme: 'btn-back-red',
         name: 'Car Finding App',
         description: 'Designed and built a mobile app for finding and comparing cars on the market, streamlining the car-buying process.',
         link: 'https://github.com/adrianhajdin/project_next13_car_showcase',
@@ -225,4 +228,29 @@ export const projects = [
         description: 'App that leverages AI to automatically generate concise & informative summaries from lengthy text content, or blogs.',
         link: 'https://github.com/adrianhajdin/project_ai_summarizer',
     }
+];
+
+export const metodology = [
+    {
+        iconUrl: university,
+        theme: 'btn-back-blue',
+        name: 'Universidades',
+        description: 'Integrate Universities.',
+        link: 'https://github.com/adrianhajdin/pricewise',
+    },
+    {
+        iconUrl: idea,
+        theme: 'btn-back-yellow',
+        name: 'Habitats de Inovação',
+        description: 'Integrate Innovation hubs',
+        link: 'https://github.com/adrianhajdin/pricewise',
+    },
+    {
+        iconUrl: profits,
+        theme: 'btn-back-green',
+        name: 'Empresas',
+        description: 'Corporative Solutions',
+        link: 'https://github.com/adrianhajdin/pricewise',
+    }
+
 ];

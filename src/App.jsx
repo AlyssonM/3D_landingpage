@@ -9,7 +9,7 @@ const App = () => {
       <Router>
         <Navbar />
         <Routes>
-          <Route path='/3D_landingpage' element={<Home />} />
+          <Route path='/3D_landingpage' element={<Home key={Date.now()}/>} />
           <Route
             path='/*'
             element={

@@ -19,6 +19,9 @@ import twitter from './twitter.svg'
 import car from './car.svg'
 import estate from './estate.svg'
 import pricewise from './pricewise.svg'
+import university from './university.svg'
+import idea from './idea.svg'
+import profits from './profits.svg'
 import snapgram from './snapgram.svg'
 import summiz from './summiz.svg'
 import threads from './threads.svg'
@@ -49,6 +52,9 @@ export {
     car,
     estate,
     pricewise,
+    university,
+    idea,
+    profits,
     snapgram,
     summiz,
     threads,
