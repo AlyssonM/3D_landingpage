@@ -7,22 +7,22 @@ import BeeGLTFScene from "../assets/3d/bee_gltf.glb";
 
 
 
-export function BeeGLTF({props}) {
+export function BeeGLTF({position, scale, ...props}) {
   const { scene, gl, viewport } = useThree();
   const BeeGLTFRef = useRef();
   const { nodes, materials, animations } = useGLTF(BeeGLTFScene);
   const { actions } = useAnimations(animations, BeeGLTFRef);
   
   const points = [
-    new THREE.Vector3(-3, -10, -30),
-    new THREE.Vector3(10, -10, -12),
-    new THREE.Vector3(35, -8, -22)
+    new THREE.Vector3(0, 0, 4.5),
+    new THREE.Vector3(0.1, -0.01, 4.65),
+    new THREE.Vector3(0.33, -0.021, 4.538)
 ];
 
 const points2 = [
-    new THREE.Vector3(35, -8, -22),
-    new THREE.Vector3(10, -10, -11),
-    new THREE.Vector3(-20, -28, -26)
+    new THREE.Vector3(0.33, -0.021, 4.538),
+    new THREE.Vector3(0, -0.1, 4.6),
+    new THREE.Vector3(-0.2, -0.23, 4.5)
 ];
 
 const curve = new THREE.CatmullRomCurve3(points);
@@ -36,17 +36,46 @@ const animatetime = useRef(0);
 const direction = useRef(0);
 const isAnimating = useRef(false);
 const stage = useRef(0);
+const startYRef = useRef(0);
 let t = 0;
 
-const handleWheel = (event) =>{
+const handleWheel = (event) => {
     if(Math.abs(event.deltaY) > 0)
         isAnimating.current = Math.abs(event.deltaY) > 0? true:false;
     direction.current = event.deltaY > 0 ? 1 : -1;
 };
 
+const handleKeyDown = (event) => {
+  if(event.key === 'ArrowDown'){
+    isAnimating.current = true;
+    direction.current = 1;
+  }
+  else if(event.key === 'ArrowUp'){
+    isAnimating.current = true;
+    direction.current = -1;
+  }
+};
+
+const handleTouchStart = (event) => {
+  const touch = event.touches[0];
+  startYRef.current = touch.clientY; 
+};
+
+const handleTouchMove = (event) => {
+  const touch = event.touches[0];
+  const touchY = touch.clientY;
+  const difference = startYRef.current - touchY;
+  isAnimating.current = Math.abs(difference) > 0 ? true:false;
+  direction.current = difference < 0 ? 1 : -1;
+  startYRef.current = touchY;
+};
+
   useEffect(() => {
     const canvas = gl.domElement;
     canvas.addEventListener("wheel", handleWheel);
+    canvas.addEventListener('touchstart', handleTouchStart);
+    canvas.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('keydown', handleKeyDown);
     scene.add(curveObject1);
     scene.add(curveObject2);
     actions["All Animations"].play();
@@ -57,10 +86,13 @@ const handleWheel = (event) =>{
         curveObject1.geometry.dispose();
         curveObject1.material.dispose();
         canvas.removeEventListener("wheel", handleWheel);
+        canvas.removeEventListener('touchstart', handleTouchStart);
+        canvas.removeEventListener('touchmove', handleTouchStart);
+        window.removeEventListener('keydown', handleKeyDown);
         curveObject2.geometry.dispose();
         curveObject2.material.dispose();
       };
-  }, [scene, actions, gl, handleWheel, curveObject1, curveObject2 ]);
+  }, [scene, actions, gl, handleWheel, handleKeyDown, handleTouchStart, handleTouchMove, curveObject1, curveObject2 ]);
 
   useFrame(({ clock, camera }) => {
         const delta = (1/100) * direction.current;
@@ -77,31 +109,46 @@ const handleWheel = (event) =>{
         }
 
         if(isAnimating.current){
-            if(stage.current == 1 && BeeGLTFRef.current.position.distanceTo(new THREE.Vector3(35, -8, -22)) < 1){
-                if(direction.current > 0){
+            if(stage.current == 1 && BeeGLTFRef.current.position.distanceTo(points[2]) < 0.01){
+              isAnimating.current = false;  
+              if(direction.current > 0){
+                    console.log('Stage 1 from 0');
+                    BeeGLTFRef.current.rotation.x = 0;
+                    BeeGLTFRef.current.rotation.y = 0*Math.PI/180;
+                    BeeGLTFRef.current.rotation.z = 0*Math.PI/180;
                     stage.current = 2;
                     animatetime.current = 0;
                 }
-                isAnimating.current = false;
+                
                 
             }
-            else if(stage.current == 2 && BeeGLTFRef.current.position.distanceTo(new THREE.Vector3(35, -8, -22)) < 1){
-                if(direction.current < 0){
+            else if(stage.current == 2 && BeeGLTFRef.current.position.distanceTo(points[2]) < 0.0001){
+              isAnimating.current = false;  
+              if(direction.current < 0){
+                    console.log('Stage 1 from 2');
+                    BeeGLTFRef.current.rotation.x = 0*Math.PI/180;
+                    BeeGLTFRef.current.rotation.y = 0*Math.PI/180;
+                    BeeGLTFRef.current.rotation.z = 0*Math.PI/180;
                     stage.current = 1;
                     animatetime.current = 1;
                 }
-                isAnimating.current = false;
+                
             }
-            else if(stage.current == 2 && BeeGLTFRef.current.position.distanceTo(new THREE.Vector3(-20, -28, -26)) < 1){       
-                stage.current = 2;
-                isAnimating.current = false;
+            else if(stage.current == 2 && BeeGLTFRef.current.position.distanceTo(points2[2]) < 0.0001){       
+              isAnimating.current = false;
+              console.log('Stage 2 from 1');  
+              BeeGLTFRef.current.rotation.x = 0*Math.PI/180;
+              BeeGLTFRef.current.rotation.y = 0*Math.PI/180;
+              BeeGLTFRef.current.rotation.z = 0*Math.PI/180;
+              stage.current = 2;
+                
             }
 
             switch(stage.current){           
                 case 1:
                     animatetime.current = Math.max(0, Math.min(1, animatetime.current+delta)); 
                     const position1 = new THREE.Vector3(0, 0, 5);
-                    const position2 = new THREE.Vector3(30, -5, 3);
+                    const position2 = new THREE.Vector3(0.41, 0, 4.83);
                     const startQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0, 0));
                     const endQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 20*Math.PI / 180, 0));
                     camera.quaternion.slerpQuaternions(startQuaternion, endQuaternion, animatetime.current);
@@ -111,19 +158,15 @@ const handleWheel = (event) =>{
                     BeeGLTFRef.current.position.y = pos.y;
                     BeeGLTFRef.current.position.z = pos.z;  
                     const tangent = curve.getTangentAt(animatetime.current);
-                    BeeGLTFRef.current.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), tangent.normalize());
-                    if(BeeGLTFRef.current.position.distanceTo(new THREE.Vector3(35, -8, -22)) < 4){
-                        BeeGLTFRef.current.rotation.x = 0;
-                        BeeGLTFRef.current.rotation.y = 0;
-                        BeeGLTFRef.current.rotation.z = 0;
-                    }      
+                    if(BeeGLTFRef.current.position.distanceTo(points[2]) > 0.01){
+                      BeeGLTFRef.current.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), tangent.normalize());
+                    }   
                 break;
 
                 case 2:
                     animatetime.current = Math.max(0, Math.min(1, animatetime.current+delta)); 
-                    console.log(animatetime.current)
-                    const position3 = new THREE.Vector3(30, -5, 3);
-                    const position4 = new THREE.Vector3(-18, -28, -4);
+                    const position3 = new THREE.Vector3(0.41, 0, 4.83);
+                    const position4 = new THREE.Vector3(-0.26, -0.2, 4.75);
                     const startQuaternion2 = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 20*Math.PI / 180, 0)); // Rotação inicial
                     const endQuaternion2 = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, -15*Math.PI / 180, 0));   // Rotação final
                     camera.position.lerpVectors(position3, position4, animatetime.current);
@@ -133,13 +176,9 @@ const handleWheel = (event) =>{
                     BeeGLTFRef.current.position.y = pos2.y;
                     BeeGLTFRef.current.position.z = pos2.z;
                     const tangent2 = curve2.getTangentAt(animatetime.current);
-                    BeeGLTFRef.current.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), tangent2.normalize());
-                    if(BeeGLTFRef.current.position.distanceTo(new THREE.Vector3(-20, -28, -26)) < 4){
-                        BeeGLTFRef.current.rotation.x = 0;
-                        BeeGLTFRef.current.rotation.y = 0;
-                        BeeGLTFRef.current.rotation.z = 0;
-                    }
-                    
+                    if(BeeGLTFRef.current.position.distanceTo(points2[2]) > 0.01){
+                      BeeGLTFRef.current.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), tangent2.normalize());
+                    }   
                 break;
             }
         
@@ -147,7 +186,7 @@ const handleWheel = (event) =>{
   });
 
   return (
-    <a.group ref={BeeGLTFRef} position={[-3, -8, -28]} scale={[8,8,8]}>
+    <a.group ref={BeeGLTFRef} position={position} scale={scale}>
       <group name="Sketchfab_Scene" >
         <group name="Sketchfab_model" rotation={[-Math.PI / 2, 0, 0]}>
           <group name="root">

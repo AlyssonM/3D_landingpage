@@ -51,8 +51,15 @@ const Home = () => {
             intensity={1}
           />
 
-          <BeeGLTF />
-          <HQ_2 />
+          <BeeGLTF 
+            scale={[0.09,0.09,0.09]}
+            position={[0, 0, 4.5]}
+            />
+          <HQ_2 
+            sizescale={[100,100,100]}
+            sizescale={1}
+            position={[-0.6, -0.95, 5.45]}
+          />
         
         </Suspense>
       </Canvas>

@@ -5,7 +5,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 
 import HQ_2Scene from "../assets/3d/HQ_2.glb";
 
-export function HQ_2(props) {
+export function HQ_2({sizescale, position, ...props}) {
   const HQ_2Ref = useRef()
   const { nodes, materials, animations } = useGLTF(HQ_2Scene)
   const { actions } = useAnimations(animations, HQ_2Ref);
@@ -21,7 +21,7 @@ export function HQ_2(props) {
   });
 
   return (
-    <a.group ref={HQ_2Ref} scale={[100,100,100]} position={[-60, -100, 70]}>
+    <a.group ref={HQ_2Ref} position={position} scale={sizescale} >
       <group name="Scene">
         <group name="Sketchfab_model" rotation={[-Math.PI / 2, 0, 0]} scale={0.123}>
           <group
