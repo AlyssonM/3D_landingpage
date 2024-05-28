@@ -139,7 +139,7 @@ const Contact = () => {
       {alert.show && <Alert {...alert} />}
 
       <div className='flex-1 min-w-[50%] flex flex-col'>
-        <h1 className='subhead-text'>Quer saber mais? Converse com a nossa Assistente AI, a Hive!</h1>
+        <h1 className='subhead-text'>Quer saber mais? Converse com a nossa Assistente I.A., a Hive!</h1>
 
         <form
           ref={formRef}
@@ -208,7 +208,7 @@ const Contact = () => {
       <div className="chatarea">
         <div className="overflow-y-auto" style={{ height: "250px" }}>
           {messages.map((msg, index) => (
-            <div key={index} className={`overflow-x-auto text-md flex flex-col ${msg.from === "user" ? "bg-blue-400 text-white p-1 mb-1 ml-10 rounded-lg h-auto max-w-2/3 shadow text-right" : "bg-green-400 text-white p-1 mt-2 mb-2 rounded-lg max-w-2/3 h-auto mr-10 shadow text-left"}`}>
+            <div key={index} className={`overflow-x-auto text-md flex flex-col ${msg.from === "user" ? "bg-blue-500 text-white p-1 mb-1 ml-10 rounded-lg h-auto max-w-2/3 shadow text-right" : "bg-gray-800 text-white p-1 mt-2 mb-2 rounded-lg max-w-2/3 h-auto mr-10 shadow text-left"}`}>
               <ReactMarkdown>{msg.text}</ReactMarkdown>
               <span className={`timestamp ${msg.from === "user" ? "text-xs opacity-75 px-1" : "text-xs opacity-75 text-right px-1"}`}>{msg.timestamp}</span>
             </div>

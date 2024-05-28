@@ -1,3 +1,4 @@
+
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { Text } from '@react-three/drei'
@@ -30,6 +31,12 @@ const Home = () => {
   
   return (
     <section className='w-full h-screen fixed overflow-hidden touch-none'>
+      {/* <div className='flex justify-center items-center'>
+      <video autoPlay loop muted className='w-screen h-screen'>
+          <source src="../assets/HiveHueReveal.mp4" type="video/mp4" />
+          Seu navegador não suporta vídeos MP4.
+      </video>
+      </div> */}
       {/* <div className='absolute top-28 left-0 right-0 z-10 flex items-center justify-center'>
         {currentStage && <HomeInfo currentStage={currentStage} />}
       </div> */}
