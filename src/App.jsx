@@ -1,7 +1,7 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 import { Footer, Navbar } from "./components";
-import { About, Contact, Home, Projects } from "./pages";
+import { About, Contact, HiveAI, Home, Projects } from "./pages";
 
 const App = () => {
   return (
@@ -15,6 +15,7 @@ const App = () => {
             element={
               <>
                 <Routes>
+                <Route path='/3D_landingpage/AI' element={<HiveAI />} />
                   <Route path='/3D_landingpage/about' element={<About />} />
                   <Route path='/3D_landingpage/projects' element={<Projects />} />
                   <Route path='/3D_landingpage/contact' element={<Contact />} />

@@ -98,21 +98,21 @@ let t = 0;
     canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
     canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
     window.addEventListener('keydown', handleKeyDown);
-    scene.add(curveObject1);
-    scene.add(curveObject2);
+    //scene.add(curveObject1);
+    //scene.add(curveObject2);
     actions["All Animations"].play()
     return () => {
         // Importante: Limpar ao desmontar
         scene.remove(curveObject1);
         scene.remove(curveObject2);
-        curveObject1.geometry.dispose();
-        curveObject1.material.dispose();
+        //curveObject1.geometry.dispose();
+        //curveObject1.material.dispose();
         canvas.removeEventListener("wheel", handleWheel);
         canvas.removeEventListener('touchstart', handleTouchStart);
         canvas.removeEventListener('touchmove', handleTouchStart);
         window.removeEventListener('keydown', handleKeyDown);
-        curveObject2.geometry.dispose();
-        curveObject2.material.dispose();
+        //curveObject2.geometry.dispose();
+        //curveObject2.material.dispose();
       };
   }, []); //scene, actions, gl, handleWheel, handleKeyDown, handleTouchStart, handleTouchMove, curveObject1, curveObject2 
   
