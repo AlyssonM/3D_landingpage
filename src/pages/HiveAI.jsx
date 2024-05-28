@@ -2,7 +2,7 @@ import emailjs from "@emailjs/browser";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useRef, useEffect, useState } from "react";
 
-import { Fox, BeeGLTF } from "../models";
+import {HiveAImodel} from "../models";
 import useAlert from "../hooks/useAlert";
 import { Alert, Loader } from "../components";
 import ReactMarkdown from 'react-markdown';
@@ -108,7 +108,6 @@ const Contact = () => {
 
           setTimeout(() => {
             hideAlert(false);
-            setCurrentAnimation("idle");
             setForm({
               name: "",
               email: "",
@@ -207,9 +206,9 @@ const Contact = () => {
           
             {/* Área do chat */}
       <div className="chatarea">
-        <div className="messages overflow-y-auto" style={{ height: "250px" }}>
+        <div className="overflow-y-auto" style={{ height: "250px" }}>
           {messages.map((msg, index) => (
-            <div key={index} className={`message flex flex-col ${msg.from === "user" ? "bg-blue-400 text-white p-1 mb-1 ml-10 rounded-lg max-w-2/3 shadow text-right" : "bg-green-400 text-white p-1 mt-2 mb-2 rounded-lg max-w-2/3 mr-10 shadow text-left"}`}>
+            <div key={index} className={`overflow-x-auto text-md flex flex-col ${msg.from === "user" ? "bg-blue-400 text-white p-1 mb-1 ml-10 rounded-lg h-auto max-w-2/3 shadow text-right" : "bg-green-400 text-white p-1 mt-2 mb-2 rounded-lg max-w-2/3 h-auto mr-10 shadow text-left"}`}>
               <ReactMarkdown>{msg.text}</ReactMarkdown>
               <span className={`timestamp ${msg.from === "user" ? "text-xs opacity-75 px-1" : "text-xs opacity-75 text-right px-1"}`}>{msg.timestamp}</span>
             </div>
@@ -241,11 +240,11 @@ const Contact = () => {
           />
 
           <Suspense fallback={<Loader />}>
-            <BeeGLTF
-              currentAnimation={currentAnimation}
+            <HiveAImodel
               position={[0, -0.8, 0]}
               rotation={[0, 0, 0]}
               scale={2.8}
+              currentAnimation={currentAnimation}
             />
           </Suspense>
         </Canvas>

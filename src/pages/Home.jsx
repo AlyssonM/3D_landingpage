@@ -72,7 +72,7 @@ const Home = () => {
         
         info.show && (
         //<div className='mt-5 flex flex-col'> 
-        <div className='info-box' style={{ position: 'absolute', top: '15%', left: '60%', transform: 'translateX(-5%)'}}> 
+        <div className='info-box' style={{ position: 'absolute', top: '15%', left: '60%', transform: 'translateX(-50%)'}}> 
           <div className='block-container w-12 h-12'>
               <div className={`btn-back rounded-xl ${metodology[Number(info.index)].theme}`} />
               <div className='btn-front rounded-xl flex justify-center items-center'>
