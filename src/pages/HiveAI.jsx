@@ -55,7 +55,7 @@ const Contact = () => {
     const now = new Date();
     const timestamp = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     setMessages((prevMessages) => [...prevMessages, { from: "bot", text, timestamp }]);
-    scrollToBottom();
+    //scrollToBottom();
   };
 
   
@@ -82,53 +82,7 @@ const Contact = () => {
     e.preventDefault();
     setLoading(true);
     setCurrentAnimation("hit");
-
-
-    emailjs
-      .send(
-        import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID,
-        {
-          from_name: form.name,
-          to_name: "JavaScript Mastery",
-          from_email: form.email,
-          to_email: "sujata@jsmastery.pro",
-          message: form.message,
-        },
-        import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
-      )
-      .then(
-        () => {
-          setLoading(false);
-          showAlert({
-            show: true,
-            text: "Thank you for your message 😃",
-            type: "success",
-          });
-
-          setTimeout(() => {
-            hideAlert(false);
-            setForm({
-              name: "",
-              email: "",
-              message: "",
-            });
-          }, [3000]);
-        },
-        (error) => {
-          setLoading(false);
-          console.error(error);
-          setCurrentAnimation("idle");
-
-          showAlert({
-            show: true,
-            text: "I didn't receive your message 😢",
-            type: "danger",
-          });
-        }
-      );
   };
-
 
   useEffect(() => {
     scrollToBottom();
@@ -146,64 +100,6 @@ const Contact = () => {
           onSubmit={handleSubmit}
           className='w-full flex flex-col gap-7 mt-5'
         >
-          <label className='text-black-500 font-semibold'>
-            Nome
-            <input
-              type='text'
-              name='name'
-              className='input'
-              placeholder='John'
-              required
-              value={form.name}
-              onChange={handleChange}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-            />
-          </label>
-          <label className='text-black-500 font-semibold mt-[-3vh]'>
-            Email
-            <input
-              type='email'
-              name='email'
-              className='input'
-              placeholder='John@gmail.com'
-              //required
-              value={form.email}
-              onChange={handleChange}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-            />
-          </label>
-          <label className='text-black-500 font-semibold mt-[-3vh]'>
-            Sua mensagem
-            <textarea
-              name='message'
-              rows='4'
-              className='textarea'
-              placeholder='Escreve seus pensamentos e dúvidas aqui...'
-              value={form.message}
-              onChange={handleChange}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-            />
-          </label>
-          <div class="flex flex-row items-center justify-center gap-10 mt-[-10px]"> 
-          <button onClick={() => sendMessage(newMessage)} className="btn p-2 bg-blue-500 text-white">
-            Enviar no Chat
-          </button>
-
-          <button
-            type='submit'
-            disabled={loading}
-            className='btn'
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-          >
-            {loading ? "Enviando..." : "Enviar e-mail"}
-          </button>
-          </div>
-          
-          
             {/* Área do chat */}
       <div className="chatarea">
         <div className="overflow-y-auto" style={{ height: "250px" }}>
@@ -216,7 +112,19 @@ const Contact = () => {
           <div ref={messagesEndRef} />
         </div>
       </div>
-
+      <textarea
+              name='message'
+              rows='1'
+              className='textarea'
+              placeholder='Escreve seus pensamentos e dúvidas aqui...'
+              value={form.message}
+              onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
+            <button onClick={() => sendMessage(newMessage)} className="btn p-2 bg-blue-500 text-white">
+            Enviar no Chat
+          </button>
         </form>
       </div>
 
@@ -241,9 +149,9 @@ const Contact = () => {
 
           <Suspense fallback={<Loader />}>
             <HiveAImodel
-              position={[0, -0.8, 0]}
+              position={[0, 0, 0]}
               rotation={[0, 0, 0]}
-              scale={2.8}
+              scale={3.0}
               currentAnimation={currentAnimation}
             />
           </Suspense>

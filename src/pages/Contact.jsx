@@ -2,7 +2,7 @@ import emailjs from "@emailjs/browser";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useRef, useState } from "react";
 
-import { Fox } from "../models";
+import { Fox, HiveAImodel } from "../models";
 import useAlert from "../hooks/useAlert";
 import { Alert, Loader } from "../components";
 
@@ -31,9 +31,9 @@ const Contact = () => {
         import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID,
         {
           from_name: form.name,
-          to_name: "JavaScript Mastery",
+          to_name: "Hive Hue",
           from_email: form.email,
-          to_email: "sujata@jsmastery.pro",
+          to_email: "contato@hivehue.com.br",
           message: form.message,
         },
         import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
@@ -43,7 +43,7 @@ const Contact = () => {
           setLoading(false);
           showAlert({
             show: true,
-            text: "Thank you for your message 😃",
+            text: "Obrigado pela sua mensagem! 😃",
             type: "success",
           });
 
@@ -64,7 +64,7 @@ const Contact = () => {
 
           showAlert({
             show: true,
-            text: "I didn't receive your message 😢",
+            text: "Não recebi sua mensagem... 😢",
             type: "danger",
           });
         }
@@ -76,7 +76,7 @@ const Contact = () => {
       {alert.show && <Alert {...alert} />}
 
       <div className='flex-1 min-w-[50%] flex flex-col'>
-        <h1 className='head-text'>Get in Touch</h1>
+        <h1 className='head-text'>Entre em contato</h1>
 
         <form
           ref={formRef}
@@ -84,7 +84,7 @@ const Contact = () => {
           className='w-full flex flex-col gap-7 mt-14'
         >
           <label className='text-black-500 font-semibold'>
-            Name
+            Nome
             <input
               type='text'
               name='name'
@@ -112,12 +112,12 @@ const Contact = () => {
             />
           </label>
           <label className='text-black-500 font-semibold'>
-            Your Message
+            Sua mensagem
             <textarea
               name='message'
               rows='4'
               className='textarea'
-              placeholder='Write your thoughts here...'
+              placeholder='Escreve seus pensamentos e dúvidas aqui...'
               value={form.message}
               onChange={handleChange}
               onFocus={handleFocus}
@@ -132,7 +132,7 @@ const Contact = () => {
             onFocus={handleFocus}
             onBlur={handleBlur}
           >
-            {loading ? "Sending..." : "Submit"}
+            {loading ? "Enviando..." : "Enviar"}
           </button>
         </form>
       </div>
@@ -157,12 +157,18 @@ const Contact = () => {
           />
 
           <Suspense fallback={<Loader />}>
-            <Fox
+          <HiveAImodel
+              position={[0, -0.8, 0]}
+              rotation={[0, 0, 0]}
+              scale={3.5}
+              currentAnimation={currentAnimation}
+            />
+            {/* <Fox
               currentAnimation={currentAnimation}
               position={[0.5, 0.35, 0]}
               rotation={[12.629, -0.6, 0]}
               scale={[0.5, 0.5, 0.5]}
-            />
+            /> */}
           </Suspense>
         </Canvas>
       </div>

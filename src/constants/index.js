@@ -1,4 +1,4 @@
-import { meta, shopify, starbucks, tesla } from "../assets/images";
+import { meta, shopify, starbucks, auris, tesla } from "../assets/images";
 import {
     car,
     contact,
@@ -114,16 +114,14 @@ export const skills = [
 
 export const experiences = [
     {
-        title: "React.js Developer",
-        company_name: "Starbucks",
-        icon: starbucks,
-        iconBg: "#accbe1",
-        date: "March 2020 - April 2021",
+        title: "Auris",
+        company_name: "Hive Hue",
+        icon: auris,
+        iconBg: "#accbe150",
+        date: "Junho 2024 - Agosto 2024",
         points: [
-            "Developing and maintaining web applications using React.js and other related technologies.",
-            "Collaborating with cross-functional teams including designers, product managers, and other developers to create high-quality products.",
-            "Implementing responsive design and ensuring cross-browser compatibility.",
-            "Participating in code reviews and providing constructive feedback to other developers.",
+            "Desenvovimento de uma aplicação web assistida por I.A para o rastreamento de demandas e problemas.",
+            "Uma metodologia integrada e verticalizada, capaz de realizar cruzamento de informações desde o chão de fábrica até a alta gestão.",
         ],
     },
     {

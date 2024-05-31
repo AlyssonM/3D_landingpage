@@ -9,6 +9,7 @@ import { metodology } from "../constants";
 import { projects } from "../constants";
 import { Link } from "react-router-dom";
 import { arrow } from "../assets/icons";
+import { OrbitControls } from '@react-three/drei';
 
 const Home = () => {
   const audioRef = useRef(new Audio(sakura));
@@ -54,12 +55,13 @@ const Home = () => {
             groundColor='#000000'
             intensity={1}
           />
-
+          
           <BeeGLTF 
             scale={[0.09,0.09,0.09]}
             position={[0, 0, 4.5]}
             setInfo={setInfo}
-            />
+          />
+
           <HQ_2 
             sizescale={1}
             position={[-0.6, -0.95, 5.45]}
