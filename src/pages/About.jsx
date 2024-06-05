@@ -26,7 +26,7 @@ const About = () => {
         </p>
       </div>
 
-      <div className='py-10 flex flex-col'>
+      {/* <div className='py-10 flex flex-col'>
         <h3 className='subhead-text'>Skills</h3>
 
         <div className='mt-16 flex flex-wrap gap-12'>
@@ -43,7 +43,7 @@ const About = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
       <div className='py-16'>
         <h3 className='subhead-text'>Roadmap</h3>
@@ -66,7 +66,7 @@ const About = () => {
                     <img
                       src={experience.icon}
                       alt={experience.company_name}
-                      className='w-[60%] h-[60%] object-contain'
+                      className='w-[70%] h-[70%] object-contain'
                     />
                   </div>
                 }

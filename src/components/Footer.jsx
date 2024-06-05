@@ -12,7 +12,7 @@ const Footer = () => {
           © 2024 <strong>Hive Hue</strong>. Todos os direitos reservados.
         </p>
 
-        <div className='flex gap-3 justify-center items-center'>
+        {/* <div className='flex gap-3 justify-center items-center'>
           {socialLinks.map((link) => (
             <Link key={link.name} to={link.link} target='_blank'>
               <img
@@ -22,7 +22,7 @@ const Footer = () => {
               />
             </Link>
           ))}
-        </div>
+        </div> */}
       </div>
     </footer>
   );

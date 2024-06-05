@@ -7,7 +7,7 @@ const CTA = () => {
         Tem interesse em desenvolver conosco? <br className='sm:block hidden' />
         Vamos inovar juntos!
       </p>
-      <Link to='/3D_landingpage/contact' className='btn'>
+      <Link to='/contact' className='btn'>
         Contato
       </Link>
     </section>

@@ -24,6 +24,9 @@ import question from './question.gif'
 import danger from './danger.png'
 import search from './search.png'
 import egg from './egg.png'
+import game from './game.png'
+import company from './company.png'
+import money from './money.png'
 import Hive from './logofav.png'
 import edital from './edital.svg'
 import idea from './idea.svg'
@@ -67,6 +70,9 @@ export {
     profits,
     egg,
     Hive,
+    game,
+    company,
+    money,
     snapgram,
     summiz,
     threads,

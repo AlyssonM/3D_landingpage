@@ -74,6 +74,20 @@ const curve6 = new THREE.CatmullRomCurve3(points6);
     actions["Take 001"].play()
     //scene.add(curveObject1);
 
+    const handleWheel = (event) => {
+      if(Math.abs(event.deltaY) > 0){
+        setInfo({ show: false, content: null });
+        if(Hive == false)
+          isAnimating.current = Math.abs(event.deltaY) > 0? true:false;
+        if(stage.current == 6 && MineBeeRef.current.position.distanceTo(points6[4]) <= 0.00001){
+          setHive(true)
+          setInfo({ show: false, content: null });
+          isAnimating.current = false;
+        }
+      }        
+      direction.current = event.deltaY > 0 ? 1 : -1;  
+    };
+
     const handleKeyDown = (event) => {
       if(event.key === 'ArrowDown'){
         if(Hive == false)
@@ -93,11 +107,47 @@ const curve6 = new THREE.CatmullRomCurve3(points6);
         setInfo({ show: false, content: null });
       }
     };
+
+    const handleTouchStart = (event) => {
+      event.preventDefault(); 
+      const touch = event.touches[0];
+      startYRef.current = touch.clientY; 
+    };
+    
+    const handleTouchMove = (event) => {
+      event.preventDefault(); 
+      const touch = event.touches[0];
+      const touchY = touch.clientY;
+      const difference = startYRef.current - touchY;
+      if(Math.abs(difference) > 0){
+        setInfo({ show: false, content: null });
+        if(Hive == false)
+          isAnimating.current = true;
+        if(stage.current == 6 && MineBeeRef.current.position.distanceTo(points6[4]) <= 0.00001){
+          setHive(true)
+          setInfo({ show: false, content: null });
+          isAnimating.current = false;
+        }
+      }
+      else{
+        isAnimating.current = false;
+      }
+      direction.current = difference < 0 ? 1 : -1;
+      startYRef.current = touchY;
+    };
+
+    const canvas = gl.domElement;
+    canvas.addEventListener("wheel", handleWheel);
+    canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+    canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       //scene.remove(curveObject1);
       //curveObject1.geometry.dispose();
       //curveObject1.material.dispose();
+      canvas.removeEventListener("wheel", handleWheel);
+      canvas.removeEventListener('touchstart', handleTouchStart);
+      canvas.removeEventListener('touchmove', handleTouchStart);
       window.removeEventListener('keydown', handleKeyDown);
     };
 
@@ -217,26 +267,26 @@ useFrame(({ clock, camera }) => {
               }  
               break;
 
-              case 6:
-                animatetime.current = Math.max(0, Math.min(1, animatetime.current+delta)); 
-                const position11 = new THREE.Vector3(-0.61, -0.31, 5.05);
-                const position12 = new THREE.Vector3(-0.54, 0, 5.01);
-                const startQuaternion9 = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0*Math.PI / 180, 0)); // Rotação inicial
-                const endQuaternion10 = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0*Math.PI / 180, 0));   // Rotação final
-                camera.position.lerpVectors(position11, position12, animatetime.current);
-                camera.quaternion.slerpQuaternions(startQuaternion9, endQuaternion10, animatetime.current);
-                const pos6 = curve6.getPointAt(animatetime.current);
-                MineBeeRef.current.position.x = pos6.x;
-                MineBeeRef.current.position.y = pos6.y;
-                MineBeeRef.current.position.z = pos6.z;
-                const tangent6 = curve5.getTangentAt(animatetime.current);
-                if(MineBeeRef.current.position.distanceTo(points6[4]) > 0.0001){
-                  if(direction.current > 0)
-                    MineBeeRef.current.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, -1), tangent6.normalize());
-                  else 
-                    MineBeeRef.current.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), tangent6.normalize());
-                }  
-                break;
+            case 6:
+              animatetime.current = Math.max(0, Math.min(1, animatetime.current+delta)); 
+              const position11 = new THREE.Vector3(-0.61, -0.31, 5.05);
+              const position12 = new THREE.Vector3(-0.54, 0, 5.01);
+              const startQuaternion9 = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0*Math.PI / 180, 0)); // Rotação inicial
+              const endQuaternion10 = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0*Math.PI / 180, 0));   // Rotação final
+              camera.position.lerpVectors(position11, position12, animatetime.current);
+              camera.quaternion.slerpQuaternions(startQuaternion9, endQuaternion10, animatetime.current);
+              const pos6 = curve6.getPointAt(animatetime.current);
+              MineBeeRef.current.position.x = pos6.x;
+              MineBeeRef.current.position.y = pos6.y;
+              MineBeeRef.current.position.z = pos6.z;
+              const tangent6 = curve5.getTangentAt(animatetime.current);
+              if(MineBeeRef.current.position.distanceTo(points6[4]) > 0.0001){
+                if(direction.current > 0)
+                  MineBeeRef.current.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, -1), tangent6.normalize());
+                else 
+                  MineBeeRef.current.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), tangent6.normalize());
+              }  
+              break;
           }
           if(stage.current == 1 && MineBeeRef.current.position.distanceTo(points[3]) <= 0.0001){
             isAnimating.current = false;  
