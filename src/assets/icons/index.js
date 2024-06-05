@@ -20,6 +20,12 @@ import car from './car.svg'
 import estate from './estate.svg'
 import pricewise from './pricewise.svg'
 import university from './university.svg'
+import question from './question.gif'
+import danger from './danger.png'
+import search from './search.png'
+import egg from './egg.png'
+import Hive from './logofav.png'
+import edital from './edital.svg'
 import idea from './idea.svg'
 import profits from './profits.svg'
 import snapgram from './snapgram.svg'
@@ -53,8 +59,14 @@ export {
     estate,
     pricewise,
     university,
+    question,
+    danger,
+    edital,
+    search,
     idea,
     profits,
+    egg,
+    Hive,
     snapgram,
     summiz,
     threads,

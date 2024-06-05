@@ -17,7 +17,13 @@ import {
     nodejs,
     pricewise,
     university,
+    question,
+    danger,
     idea,
+    egg,
+    Hive,
+    edital,
+    search,
     profits,
     react,
     redux,
@@ -26,7 +32,7 @@ import {
     summiz,
     tailwindcss,
     threads,
-    typescript
+    typescript,
 } from "../assets/icons";
 
 export const skills = [
@@ -230,24 +236,59 @@ export const projects = [
 
 export const metodology = [
     {
-        iconUrl: university,
-        theme: 'btn-back-blue',
-        name: 'Universidades',
-        description: 'Integrate Universities.',
+        iconUrl: question,
+        theme: 'btn-back-black',
+        name: 'Inovação Aberta',
+        description: 'Você sabe como funciona e o quanto demora atualmente um programa ou desafio de inovação aberta?',
+        link: 'https://github.com/adrianhajdin/pricewise',
+    },
+    {
+        iconUrl: danger,
+        theme: 'btn-back-red',
+        name: 'Detecção do Problema',
+        description: 'A empresa detecta um problema interno e decide usar inovação aberta para solucioná-lo.',
         link: 'https://github.com/adrianhajdin/pricewise',
     },
     {
         iconUrl: idea,
         theme: 'btn-back-yellow',
-        name: 'Habitats de Inovação',
-        description: 'Integrate Innovation hubs',
+        name: 'Busca por Parceiros',
+        description: "A empresa busca por HUB's de inovação, academias, empresas especialistas em inovação aberta para rodar desafios.",
+        link: 'https://github.com/adrianhajdin/pricewise',
+    },
+    {
+        iconUrl: edital,
+        theme: 'btn-back-black',
+        name: 'Criação do Edital',
+        description: 'Cria-se o edital com as oportunidades e obrigações que os candidatos terão ao serem escolhidos para determinada proposta.',
+        link: 'https://github.com/adrianhajdin/pricewise',
+    },
+    {
+        iconUrl: search,
+        theme: 'btn-back-blue',
+        name: 'Busca por Candidatos',
+        description: 'As empresas fazem a divulgação do edital, buscando atrar o maior número de candidatos.',
         link: 'https://github.com/adrianhajdin/pricewise',
     },
     {
         iconUrl: profits,
         theme: 'btn-back-green',
-        name: 'Empresas',
-        description: 'Corporative Solutions',
+        name: 'Avaliação e Seleção de Projetos',
+        description: 'Os candidatos que atenderam todos os requisitos tem seus projetos avaliados e classificados.',
+        link: 'https://github.com/adrianhajdin/pricewise',
+    },
+    {
+        iconUrl: egg,
+        theme: 'btn-back-yellow',
+        name: 'Incubação',
+        description: 'Após a validação, a ideia passa pelo processo de incubação para amadurecimento e organização comercial.',
+        link: 'https://github.com/adrianhajdin/pricewise',
+    },
+    {
+        iconUrl: Hive,
+        theme: 'btn-back-blue',
+        name: 'Hive Hue Flow',
+        description: 'Vamos tornar o processo de inovação aberta mais rápido, seguro e popular!',
         link: 'https://github.com/adrianhajdin/pricewise',
     }
 

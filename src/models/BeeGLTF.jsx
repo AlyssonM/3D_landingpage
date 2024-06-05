@@ -8,65 +8,30 @@ import BeeGLTFScene from "../assets/3d/bee_gltf.glb";
 
 
 
-export function BeeGLTF({position, scale, setInfo, ...props}) {
+export function BeeGLTF({position, scale, setInfo, Hive, ...props}) {
   const { scene, gl, viewport } = useThree();
   const BeeGLTFRef = useRef();
   const { nodes, materials, animations } = useGLTF(BeeGLTFScene);
   const { actions } = useAnimations(animations, BeeGLTFRef);
   
-  const points = [
-    new THREE.Vector3(0, 0, 4.5),
-    new THREE.Vector3(0.1, -0.01, 4.65),
-    new THREE.Vector3(0.33, -0.021, 4.538)
-];
-
-const points2 = [
-    new THREE.Vector3(0.33, -0.021, 4.538),
-    //new THREE.Vector3(0, -0.1, 4.6),
-    new THREE.Vector3(0.35, -0.1, 4.6),
-    new THREE.Vector3(0.42, -0.23, 4.5)
-    //new THREE.Vector3(-0.2, -0.23, 4.5)
-];
-
-const points3 = [
-  new THREE.Vector3(0.42, -0.23, 4.5),
-  new THREE.Vector3(0.2, -0.23, 4.6),
-  new THREE.Vector3(0.01, -0.23, 4.5)
-];
-
-const curve = new THREE.CatmullRomCurve3(points);
-const curve2 = new THREE.CatmullRomCurve3(points2);
-const curve3 = new THREE.CatmullRomCurve3(points3);
-const geometry1 = new THREE.BufferGeometry().setFromPoints(curve.getPoints(50));
-const geometry2 = new THREE.BufferGeometry().setFromPoints(curve2.getPoints(50));
-const material = new THREE.LineBasicMaterial({ color: 0xff0000 });
-const curveObject1 = new THREE.Line(geometry1, material);
-const curveObject2 = new THREE.Line(geometry2, material);
-const animatetime = useRef(0);
-const direction = useRef(0);
-const isAnimating = useRef(false);
-const stage = useRef(0);
-const startYRef = useRef(0);
-let t = 0;
-
   useEffect(() => {
     const handleWheel = (event) => {
       if(Math.abs(event.deltaY) > 0){
         setInfo({ show: false, content: null });
-        isAnimating.current = Math.abs(event.deltaY) > 0? true:false;
+        //isAnimating.current = Math.abs(event.deltaY) > 0? true:false;
       }        
-      direction.current = event.deltaY > 0 ? 1 : -1;  
+      //direction.current = event.deltaY > 0 ? 1 : -1;  
     };
   
     const handleKeyDown = (event) => {
       if(event.key === 'ArrowDown'){
-        isAnimating.current = true;
-        direction.current = 1;
+        //isAnimating.current = true;
+        // direction.current = 1;
         setInfo({ show: false, content: null });
       }
       else if(event.key === 'ArrowUp'){
-        isAnimating.current = true;
-        direction.current = -1;
+        //isAnimating.current = true;
+        // direction.current = -1;
         setInfo({ show: false, content: null });
       }
     };
@@ -84,179 +49,38 @@ let t = 0;
       const difference = startYRef.current - touchY;
       if(Math.abs(difference) > 0){
         setInfo({ show: false, content: null });
-        isAnimating.current = true;
+        //isAnimating.current = true;
       }
       else{
         isAnimating.current = false;
       }
-      direction.current = difference < 0 ? 1 : -1;
+      // direction.current = difference < 0 ? 1 : -1;
       startYRef.current = touchY;
     };
+
+    if(Hive == true){
+      BeeGLTFRef.current.position.z = 4.8;  
+    }
+    else{
+        BeeGLTFRef.current.position.z = 9;  
+    }
 
     const canvas = gl.domElement;
     canvas.addEventListener("wheel", handleWheel);
     canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
     canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
     window.addEventListener('keydown', handleKeyDown);
-    //scene.add(curveObject1);
-    //scene.add(curveObject2);
     actions["All Animations"].play()
     return () => {
-        // Importante: Limpar ao desmontar
-        scene.remove(curveObject1);
-        scene.remove(curveObject2);
-        //curveObject1.geometry.dispose();
-        //curveObject1.material.dispose();
+        
         canvas.removeEventListener("wheel", handleWheel);
         canvas.removeEventListener('touchstart', handleTouchStart);
         canvas.removeEventListener('touchmove', handleTouchStart);
         window.removeEventListener('keydown', handleKeyDown);
-        //curveObject2.geometry.dispose();
-        //curveObject2.material.dispose();
+       
       };
-  }, []); //scene, actions, gl, handleWheel, handleKeyDown, handleTouchStart, handleTouchMove, curveObject1, curveObject2 
+  }, [Hive]);
   
-  useFrame(({ clock, camera }) => {
-        const delta = (2/100) * direction.current;
-
-        if(stage.current == 0){
-            t = Math.max(0, Math.min(1, t+0.01)); 
-            const cam1 = new THREE.Vector3(0, 0.25, 4.7);
-            const cam2 = new THREE.Vector3(0, 0.01, 4.8);
-            camera.position.lerpVectors(cam1, cam2, t);
-            if(t >= 1){ 
-                animatetime.current = 0; 
-                stage.current = 1;  
-            }
-        }
-
-        if(isAnimating.current){
-          switch(stage.current){           
-            case 1:
-                animatetime.current = Math.max(0, Math.min(1, animatetime.current+delta)); 
-                const position1 = new THREE.Vector3(0, 0.01, 4.8);
-                const position2 = new THREE.Vector3(0.41, 0, 4.83);
-                const startQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0, 0));
-                const endQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 20*Math.PI / 180, 0));
-                camera.quaternion.slerpQuaternions(startQuaternion, endQuaternion, animatetime.current);
-                camera.position.lerpVectors(position1, position2, animatetime.current);
-                const pos = curve.getPointAt(animatetime.current);
-                BeeGLTFRef.current.position.x = pos.x;
-                BeeGLTFRef.current.position.y = pos.y;
-                BeeGLTFRef.current.position.z = pos.z;  
-                const tangent = curve.getTangentAt(animatetime.current);
-                if(BeeGLTFRef.current.position.distanceTo(points[2]) > 0.01){
-                  BeeGLTFRef.current.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), tangent.normalize());
-                }   
-            break;
-
-            case 2:
-                animatetime.current = Math.max(0, Math.min(1, animatetime.current+delta)); 
-                const position3 = new THREE.Vector3(0.41, 0, 4.83);
-                //const position4 = new THREE.Vector3(-0.26, -0.2, 4.75);
-                const position4 = new THREE.Vector3(0.38, -0.2, 4.75);
-                const startQuaternion2 = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 20*Math.PI / 180, 0)); // Rotação inicial
-                const endQuaternion2 = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0*Math.PI / 180, 0));   // Rotação final
-                camera.position.lerpVectors(position3, position4, animatetime.current);
-                camera.quaternion.slerpQuaternions(startQuaternion2, endQuaternion2, animatetime.current);
-                const pos2 = curve2.getPointAt(animatetime.current);
-                BeeGLTFRef.current.position.x = pos2.x;
-                BeeGLTFRef.current.position.y = pos2.y;
-                BeeGLTFRef.current.position.z = pos2.z;
-                const tangent2 = curve2.getTangentAt(animatetime.current);
-                if(BeeGLTFRef.current.position.distanceTo(points2[2]) > 0.01){
-                  BeeGLTFRef.current.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 0), tangent2.normalize());
-                }   
-            break;
-
-            case 3:
-              animatetime.current = Math.max(0, Math.min(1, animatetime.current+delta)); 
-                const position5 = new THREE.Vector3(0.38, -0.2, 4.75);
-                const position6 = new THREE.Vector3(0.01, -0.2, 4.71);
-                const startQuaternion3 = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0*Math.PI / 180, 0)); // Rotação inicial
-                const endQuaternion4 = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0*Math.PI / 180, 0));   // Rotação final
-                camera.position.lerpVectors(position5, position6, animatetime.current);
-                camera.quaternion.slerpQuaternions(startQuaternion3, endQuaternion4, animatetime.current);
-                const pos3 = curve3.getPointAt(animatetime.current);
-                BeeGLTFRef.current.position.x = pos3.x;
-                BeeGLTFRef.current.position.y = pos3.y;
-                BeeGLTFRef.current.position.z = pos3.z;
-                const tangent3 = curve3.getTangentAt(animatetime.current);
-                if(BeeGLTFRef.current.position.distanceTo(points3[2]) > 0.01){
-                  BeeGLTFRef.current.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), tangent3.normalize());
-                }   
-        }
-            if(stage.current == 1 && BeeGLTFRef.current.position.distanceTo(points[2]) <= 0.0001){
-              isAnimating.current = false;  
-              if(direction.current > 0){
-                    BeeGLTFRef.current.rotation.x = 0*Math.PI/180;
-                    BeeGLTFRef.current.rotation.y = 0*Math.PI/180;
-                    BeeGLTFRef.current.rotation.z = 0*Math.PI/180;
-                    stage.current = 2;
-                    setInfo({ show: true, index: 0, content: 'Informações sobre o Estágio 1' });
-                    animatetime.current = 0;
-                }
-                
-            }
-            else if(stage.current == 2 && BeeGLTFRef.current.position.distanceTo(points[2]) <= 0.0001){
-              isAnimating.current = false;  
-              if(direction.current < 0){
-                    BeeGLTFRef.current.rotation.x = 0*Math.PI/180;
-                    BeeGLTFRef.current.rotation.y = 0*Math.PI/180;
-                    BeeGLTFRef.current.rotation.z = 0*Math.PI/180;
-                    stage.current = 1;
-                    setInfo({ show: true, index: 0, content: 'Informações sobre o Estágio 1' });
-                    animatetime.current = 1;
-                }
-                
-            }
-            else if(stage.current == 2 && BeeGLTFRef.current.position.distanceTo(points2[2]) <= 0.0001){       
-              
-              BeeGLTFRef.current.rotation.x = 0*Math.PI/180;
-              BeeGLTFRef.current.rotation.y = 0*Math.PI/180;
-              BeeGLTFRef.current.rotation.z = 0*Math.PI/180;
-              if(direction.current < 0){
-                stage.current = 2;
-                animatetime.current = 1;
-              }
-              else{
-                stage.current = 3;
-                animatetime.current = 0;
-              }
-              setInfo({ show: true, index: 1, content: 'Informações sobre o Estágio 2' });
-              isAnimating.current = false;
-                
-            }
-            else if(stage.current == 3 && BeeGLTFRef.current.position.distanceTo(points2[2]) <= 0.0001){ 
-              isAnimating.current = false;
-              BeeGLTFRef.current.rotation.x = 0*Math.PI/180;
-              BeeGLTFRef.current.rotation.y = 0*Math.PI/180;
-              BeeGLTFRef.current.rotation.z = 0*Math.PI/180;
-              if(direction.current < 0){
-                stage.current = 2;
-                animatetime.current = 1;
-              }
-              else{
-                stage.current = 3;
-                animatetime.current = 0;
-              }
-              setInfo({ show: true, index: 1, content: 'Informações sobre o Estágio 2' });
-            }
-            else if(stage.current == 3 && BeeGLTFRef.current.position.distanceTo(points3[2]) <= 0.0001){       
-              isAnimating.current = false;
-              BeeGLTFRef.current.rotation.x = 0*Math.PI/180;
-              BeeGLTFRef.current.rotation.y = 0*Math.PI/180;
-              BeeGLTFRef.current.rotation.z = 0*Math.PI/180;
-              if(direction.current < 0){
-                stage.current = 2;
-                animatetime.current = 1;
-              }
-              setInfo({ show: true, index: 2, content: 'Informações sobre o Estágio 3' });
-                
-            }
-          }
-  });
-
   return (
     <a.group ref={BeeGLTFRef} position={position} scale={scale}>
       <group name="Sketchfab_Scene" >
